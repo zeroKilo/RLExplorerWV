@@ -1,0 +1,14 @@
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\bin\Debug\RLExplorerWV.exe.config
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\bin\Debug\RLExplorerWV.exe
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\bin\Debug\RLExplorerWV.pdb
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\obj\Debug\RLExplorerWV.Form1.resources
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\obj\Debug\RLExplorerWV.Properties.Resources.resources
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\obj\Debug\RLExplorerWV.csproj.GenerateResource.Cache
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\obj\Debug\RLExplorerWV.exe
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\obj\Debug\RLExplorerWV.pdb
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\bin\Debug\Be.Windows.Forms.HexBox.dll
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\bin\Debug\EngineClasses.dll
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\bin\Debug\Be.Windows.Forms.HexBox.pdb
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\bin\Debug\Be.Windows.Forms.HexBox.xml
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\bin\Debug\EngineClasses.pdb
+D:\CODE\c#\RLExplorerWV\RLExplorerWV\obj\Debug\RLExplorerWV.csprojResolveAssemblyReference.cache
