@@ -105,3 +105,12 @@ D:\CODE\c#\RLExplorerWV\Be.Windows.Forms.HexBox\obj\Debug\Be.Windows.Forms.HexBo
 D:\CODE\c#\RLExplorerWV\Be.Windows.Forms.HexBox\obj\Debug\Be.Windows.Forms.HexBox.dll
 D:\CODE\c#\RLExplorerWV\Be.Windows.Forms.HexBox\obj\Debug\Be.Windows.Forms.HexBox.pdb
 D:\CODE\c#\RLExplorerWV\Be.Windows.Forms.HexBox\obj\Debug\Be.Windows.Forms.HexBox.csprojResolveAssemblyReference.cache
+D:\CODE\GitHub\RLExplorerWV\Be.Windows.Forms.HexBox\bin\Debug\Be.Windows.Forms.HexBox.dll
+D:\CODE\GitHub\RLExplorerWV\Be.Windows.Forms.HexBox\bin\Debug\Be.Windows.Forms.HexBox.pdb
+D:\CODE\GitHub\RLExplorerWV\Be.Windows.Forms.HexBox\bin\Debug\Be.Windows.Forms.HexBox.xml
+D:\CODE\GitHub\RLExplorerWV\Be.Windows.Forms.HexBox\obj\Debug\Be.Windows.Forms.HexBox.csprojResolveAssemblyReference.cache
+D:\CODE\GitHub\RLExplorerWV\Be.Windows.Forms.HexBox\obj\Debug\Be.Windows.Forms.HexBox.resources
+D:\CODE\GitHub\RLExplorerWV\Be.Windows.Forms.HexBox\obj\Debug\Be.Windows.Forms.Properties.Resources.resources
+D:\CODE\GitHub\RLExplorerWV\Be.Windows.Forms.HexBox\obj\Debug\Be.Windows.Forms.HexBox.csproj.GenerateResource.Cache
+D:\CODE\GitHub\RLExplorerWV\Be.Windows.Forms.HexBox\obj\Debug\Be.Windows.Forms.HexBox.dll
+D:\CODE\GitHub\RLExplorerWV\Be.Windows.Forms.HexBox\obj\Debug\Be.Windows.Forms.HexBox.pdb

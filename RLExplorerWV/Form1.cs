@@ -54,6 +54,7 @@ namespace RLExplorerWV
                 listBox3.Items.Add(count.ToString("d5") + " : " + upk.GetObjectNamePath(count + 1));
                 count++;
             }
+            Status.Text = "Loaded File : " + s;
         }
 
         private void saveRawDecryptedToolStripMenuItem_Click(object sender, EventArgs e)
@@ -67,18 +68,6 @@ namespace RLExplorerWV
                 File.WriteAllBytes(d.FileName, upk.decrypted.ToArray());
                 MessageBox.Show("Done.");
             }
-        }
-
-        private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int n = listBox3.SelectedIndex;
-            if (n == -1)
-                return;
-            upk.decrypted.Seek(upk.ExportList[n].Dataoffset, 0);
-            int size = (int)upk.ExportList[n].Datasize;
-            byte[] buff = new byte[size];
-            upk.decrypted.Read(buff, 0, size);
-            hb2.ByteProvider = new DynamicByteProvider(buff);
         }
 
         private void saveExportEntryDataToolStripMenuItem_Click(object sender, EventArgs e)
@@ -97,6 +86,19 @@ namespace RLExplorerWV
                 File.WriteAllBytes(d.FileName, buff);
                 MessageBox.Show("Done.");
             }
+        }
+
+        private void listBox3_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            int n = listBox3.SelectedIndex;
+            if (n == -1)
+                return;
+            upk.decrypted.Seek(upk.ExportList[n].Dataoffset, 0);
+            int size = (int)upk.ExportList[n].Datasize;
+            byte[] buff = new byte[size];
+            upk.decrypted.Read(buff, 0, size);
+            hb2.ByteProvider = new DynamicByteProvider(buff);
+            hb3.ByteProvider = new DynamicByteProvider(upk.ExportList[n].ToRaw());
         }
     }
 }

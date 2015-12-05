@@ -83,6 +83,29 @@ namespace EngineClasses
                 unk16 = Helpers.ReadUInt(s);
                 unk17 = Helpers.ReadUInt(s);
             }
+
+            public byte[] ToRaw()
+            {
+                MemoryStream m = new MemoryStream();
+                Helpers.WriteUInt(m, idxClass);
+                Helpers.WriteUInt(m, idxParent);
+                Helpers.WriteUInt(m, idxLink);
+                Helpers.WriteUInt(m, idxName);
+                Helpers.WriteUInt(m, unk5);
+                Helpers.WriteUInt(m, unk6);
+                Helpers.WriteUInt(m, unk7);
+                Helpers.WriteUInt(m, unk8);
+                Helpers.WriteUInt(m, Datasize);
+                Helpers.WriteUInt(m, Dataoffset);
+                Helpers.WriteUInt(m, unk11);
+                Helpers.WriteUInt(m, unk12);
+                Helpers.WriteUInt(m, unk13);
+                Helpers.WriteUInt(m, unk14);
+                Helpers.WriteUInt(m, unk15);
+                Helpers.WriteUInt(m, unk16);
+                Helpers.WriteUInt(m, unk17);
+                return m.ToArray();
+            }
         }
 
         public class ImportListEntry

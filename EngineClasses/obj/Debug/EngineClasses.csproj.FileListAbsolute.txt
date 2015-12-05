@@ -3,3 +3,8 @@ D:\CODE\c#\RLExplorerWV\EngineClasses\bin\Debug\EngineClasses.pdb
 D:\CODE\c#\RLExplorerWV\EngineClasses\obj\Debug\EngineClasses.dll
 D:\CODE\c#\RLExplorerWV\EngineClasses\obj\Debug\EngineClasses.pdb
 D:\CODE\c#\RLExplorerWV\EngineClasses\obj\Debug\EngineClasses.csprojResolveAssemblyReference.cache
+D:\CODE\GitHub\RLExplorerWV\EngineClasses\bin\Debug\EngineClasses.dll
+D:\CODE\GitHub\RLExplorerWV\EngineClasses\bin\Debug\EngineClasses.pdb
+D:\CODE\GitHub\RLExplorerWV\EngineClasses\obj\Debug\EngineClasses.csprojResolveAssemblyReference.cache
+D:\CODE\GitHub\RLExplorerWV\EngineClasses\obj\Debug\EngineClasses.dll
+D:\CODE\GitHub\RLExplorerWV\EngineClasses\obj\Debug\EngineClasses.pdb
