@@ -99,6 +99,73 @@ namespace RLExplorerWV
             upk.decrypted.Read(buff, 0, size);
             hb2.ByteProvider = new DynamicByteProvider(buff);
             hb3.ByteProvider = new DynamicByteProvider(upk.ExportList[n].ToRaw());
+            rtb1.Text = TryReadProps(new MemoryStream(buff));
+        }
+
+        public string TryReadProps(MemoryStream m, int tab = 0, int start = 4)
+        {
+            StringBuilder sb = new StringBuilder();
+            m.Seek(start, 0);
+            string t = "";
+            for (int i = 0; i < tab; i++)
+                t += "\t";
+            while (true)
+            {
+                string offset = m.Position.ToString("X");
+                if (m.Position >= m.Length)
+                    break;
+                int name = Helpers.ReadInt(m);
+                int tmp = Helpers.ReadInt(m);
+                if (!upk.IsNameIndex(name) || upk.GetName(name) == "None")
+                    break;
+                int type = Helpers.ReadInt(m);
+                tmp = Helpers.ReadInt(m);
+                if (!upk.IsNameIndex(type))
+                    break;
+                int size = Helpers.ReadInt(m);
+                tmp = Helpers.ReadInt(m);
+                if (m.Position + size >= m.Length || size < 0)
+                    break;
+                byte[] buff;
+                int clazz, value;
+                switch(upk.GetName(type))
+                {
+                    case "StructProperty":
+                        clazz = Helpers.ReadInt(m);
+                        tmp = Helpers.ReadInt(m);
+                        if (!upk.IsNameIndex(clazz))
+                            return sb.ToString();
+                        buff = new byte[size];
+                        m.Read(buff, 0, size);
+                        sb.AppendFormat("{0}<prop Offset=0x{1} Name='{2}' Type='{3}' Size={4} Class='{5}'>\n", t, offset, upk.GetName(name), upk.GetName(type), size, upk.GetName(clazz));
+                        sb.Append(TryReadProps(new MemoryStream(buff), tab + 1, 0));
+                        sb.AppendFormat("{0}<prop/>\n", t, upk.GetName(name), upk.GetName(type), size);
+                        break;
+                    case "BoolProperty":
+                        size = 1;
+                        buff = new byte[size];
+                        m.Read(buff, 0, size);
+                        sb.AppendFormat("{0}<prop Offset=0x{1} Name='{2}' Type='{3}' Size={4} value='{5}'/>\n", t, offset, upk.GetName(name), upk.GetName(type), size, Helpers.ByteArrayToHexString(buff));
+                        break;
+                    case "ByteProperty":
+                        clazz = Helpers.ReadInt(m);
+                        if (!upk.IsNameIndex(clazz))
+                            return sb.ToString();
+                        tmp = Helpers.ReadInt(m);
+                        value = Helpers.ReadInt(m);
+                        if (!upk.IsNameIndex(value))
+                            return sb.ToString();
+                        tmp = Helpers.ReadInt(m);
+                        sb.AppendFormat("{0}<prop Offset=0x{1} Name='{2}' Type='{3}' Size={4} class='{5}' value='{6}'/>\n", t, offset, upk.GetName(name), upk.GetName(type), size, upk.GetName(clazz), upk.GetName(value));
+                        break;
+                    default:
+                        buff = new byte[size];
+                        m.Read(buff, 0, size);
+                        sb.AppendFormat("{0}<prop Offset=0x{1} Name='{2}' Type='{3}' Size={4} value='{5}'/>\n", t, offset, upk.GetName(name), upk.GetName(type), size, Helpers.ByteArrayToHexString(buff));
+                        break;
+                }
+            }
+            return sb.ToString();
         }
     }
 }

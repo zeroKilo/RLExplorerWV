@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 
 namespace EngineClasses
 {
@@ -13,7 +14,7 @@ namespace EngineClasses
         {
             public uint magic;
             public uint unk1;
-            public uint unk2;
+            public uint headerSize;
             public string NoneString;
             public uint unk3;
             public uint NameOffset;
@@ -130,6 +131,41 @@ namespace EngineClasses
             }
         }
 
+        public class ChunkHeader
+        {
+            public int magic;
+            public int bSize; 
+            public int cSize;
+            public int ucSize;
+            public List<Blockheader> blocks;
+            public ChunkHeader(MemoryStream m)
+            {
+                magic = Helpers.ReadInt(m);
+                bSize = Helpers.ReadInt(m);
+                cSize = Helpers.ReadInt(m);
+                ucSize = Helpers.ReadInt(m);
+                blocks = new List<Blockheader>();
+                int readbytes = 0;
+                while (readbytes < ucSize)
+                {
+                    Blockheader b = new Blockheader(m);
+                    blocks.Add(b);
+                    readbytes += b.ucSize;
+                }
+            }
+        }
+
+        public class Blockheader
+        {
+            public int cSize;
+            public int ucSize;
+            public Blockheader(MemoryStream m)
+            {
+                cSize = Helpers.ReadInt(m);
+                ucSize = Helpers.ReadInt(m);
+            }
+        }
+
         public string MyPath;
         public Header header;
         public List<NameListEntry> NameList;
@@ -147,7 +183,7 @@ namespace EngineClasses
             MyPath = path;
             raw = new MemoryStream(File.ReadAllBytes(path));
             ReadHeader(raw);
-            decrypted = new MemoryStream(Decrypt());
+            decrypted = new MemoryStream(DecryptAndUnpack());
             ReadNameList();
             ReadExportList();
             ReadImportList();
@@ -158,7 +194,7 @@ namespace EngineClasses
             header = new Header();
             header.magic = Helpers.ReadUInt(s);
             header.unk1 = Helpers.ReadUInt(s);
-            header.unk2 = Helpers.ReadUInt(s);
+            header.headerSize = Helpers.ReadUInt(s);
             header.NoneString = Helpers.ReadUnrealString(s);
             header.unk3 = Helpers.ReadUInt(s);
             header.NameCount = Helpers.ReadUInt(s);
@@ -205,22 +241,60 @@ namespace EngineClasses
             }
         }
 
-        byte[] Decrypt()
-        {            
+        public byte[] DecryptAndUnpack()
+        {
+            MemoryStream m = new MemoryStream();  
             int pos = (int)header.NameOffset;
-            int size = (int)(raw.Length - pos);
+            int end = (int)header.headerSize;
+            int size = (int)(end - pos);
             int size2 = size + (0x100 - size % 0x20);
+            int size3 = (int)raw.Length - end;
             byte[] h = new byte[pos];
             raw.Seek(0, 0);
             raw.Read(h, 0, pos);
+            m.Write(h, 0, pos);
             byte[] buff = new byte[size2];
             raw.Read(buff, 0, size);
             buff = Helpers.AESDecrypt(buff, key);
-            MemoryStream m = new MemoryStream();
-            m.Write(h, 0, pos);
             m.Write(buff, 0, size);
+            buff = new byte[size3];
+            raw.Read(buff, 0, size3);
+            buff = DecompressData(new MemoryStream(buff));
+            m.Write(buff, 0, buff.Length);
             return m.ToArray();
         }
+
+        public byte[] DecompressData(MemoryStream data) 
+        {
+            MemoryStream m = new MemoryStream();
+            data.Seek(0, 0);
+            while (data.Position < data.Length)
+            {
+                ChunkHeader h = new ChunkHeader(data);
+                foreach (Blockheader b in h.blocks)
+                {
+                    byte[] buff = new byte[b.cSize];
+                    data.Read(buff, 0, b.cSize);
+                    m.Write(DecompressZlib(new MemoryStream(buff)), 0, b.ucSize);
+                }
+            }
+            return m.ToArray();
+        }
+
+        public static byte[] DecompressZlib(Stream source)
+        {
+            byte[] result = null;
+            using (MemoryStream outStream = new MemoryStream())
+            {
+                using (InflaterInputStream inf = new InflaterInputStream(source))
+                {
+                    inf.CopyTo(outStream);
+                }
+                result = outStream.ToArray();
+            }
+            return result;
+        }
+
 
         public string GetName(int index)
         {
@@ -228,6 +302,11 @@ namespace EngineClasses
             if (index >= 0 && index < header.NameCount)
                 s = NameList[index].ToString();
             return s;
+        }
+
+        public bool IsNameIndex(int index)
+        {
+            return (index >= 0 && index < NameList.Count);
         }
 
         public string GetObjectName(int uindex)

@@ -26,3 +26,4 @@ D:\CODE\GitHub\RLExplorerWV\RLExplorerWV\obj\Debug\RLExplorerWV.csprojResolveAss
 D:\CODE\GitHub\RLExplorerWV\RLExplorerWV\obj\Debug\RLExplorerWV.Form1.resources
 D:\CODE\GitHub\RLExplorerWV\RLExplorerWV\obj\Debug\RLExplorerWV.Properties.Resources.resources
 D:\CODE\GitHub\RLExplorerWV\RLExplorerWV\obj\Debug\RLExplorerWV.csproj.GenerateResource.Cache
+D:\CODE\GitHub\RLExplorerWV\RLExplorerWV\bin\Debug\ICSharpCode.SharpZipLib.dll
